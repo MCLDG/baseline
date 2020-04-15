@@ -41,7 +41,7 @@ Carry out the steps below on the EC2 instance:
     sudo groupadd -r dnsmasq
     sudo useradd -r -g dnsmasq dnsmasq
     sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
-    sudo cp ./config/dnsmasq-aws.conf /etc/dnsmasq.conf
+    sudo cp ../config/dnsmasq-aws.conf /etc/dnsmasq.conf
     ```
     
     Then execute:
