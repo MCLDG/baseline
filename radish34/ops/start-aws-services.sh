@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Use Node 11..."
+. ~/.nvm/nvm.sh
 nvm use 11
 
 echo "Start dnsmasq..."

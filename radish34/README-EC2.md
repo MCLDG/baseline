@@ -41,7 +41,7 @@ Carry out the steps below on the EC2 instance:
     sudo groupadd -r dnsmasq
     sudo useradd -r -g dnsmasq dnsmasq
     sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
-    sudo cp ../config/dnsmasq-aws.conf /etc/dnsmasq.conf
+    sudo cp ./aws/dnsmasq-aws.conf /etc/dnsmasq.conf
     ```
     
     Then execute:
@@ -84,7 +84,7 @@ Carry out the steps below on the EC2 instance:
 In the directory `baseline/radish34`:
 
 1. As part of the development environment, we assume a procurement use-case with three users: (1) buyer and (2) supplier organizations.
-2. Run `npm ci && npm run postinstall`. ** This takes about 6 minutes to clean install npm packages in root and all sub directories **
+2. Run `npm ci`. ** This takes about 6 minutes to clean install npm packages in root and all sub directories **
 3. Run `docker-compose build` to create the latest versions of the docker containers. ** Only do this the first time or when service source code is changed **. ** This takes about 40 minutes for a fresh build **
 4. Run `npm run setup-circuits` to perform zk-SNARK trusted setups for the circuits that are contained in the `/zkp/circuits`. ** This takes about 5-10 minutes to complete ** 
     <details> 
@@ -371,7 +371,7 @@ If you cannot access the endpoint, it could be related to the issue in the troub
 If you exit your SSH session and need to re-establish it, you'll need to check dnsmasq is still running:
 
 ```
-    ./ops/start-services.sh
+    ./ops/start-aws-services.sh
 ```
 Start or restart the Docker containers:
 
