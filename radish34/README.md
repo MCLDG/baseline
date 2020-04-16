@@ -27,9 +27,9 @@ After you've done that, log in to the Github package registry by running
 ### Setup
 
 1. As part of the development environment, we assume a procurement use-case with three users: (1) buyer and (2) supplier organizations.
-2. Run `npm i && npm run postinstall`. ** This takes about 6 minutes to clean install npm packages in root and all sub directories **
+2. Run `npm i`. ** This takes about 1 minute to clean install npm packages in root and all sub directories **
 3. Run `docker-compose build` to create the latest versions of the docker containers. ** Only do this the first time or when service source code is changed **. ** This takes about 40 minutes for a fresh build **
-4. Run `npm run setup-circuits` to perform zk-SNARK trusted setups for the circuits that are contained in the `/zkp/circuits`. ** This takes about 5-10 minutes to complete ** 
+4. Run `npm run setup-circuits` to perform zk-SNARK trusted setups for the circuits that are contained in the `/zkp/circuits`. If you see an error related to 'timeout', see the Troubleshooting section for a possible resolution. ** This takes about 5-10 minutes to complete ** 
     <details> 
       <summary>Example logs</summary>
       <p> 
@@ -49,7 +49,7 @@ After you've done that, log in to the Github package registry by running
       </p>
     </details> 
 
-5. Run `npm run build:contracts` to compile the smart contracts in `contracts/contracts` to JSON files (containing ABI and Bytecode key value pairs) in the `contracts/artifacts` folder needed for deployment. ** This takes less than 15 seconds to run **
+5. Run `npm run build:contracts` to compile the smart contracts in `contracts/contracts` to JSON files (containing ABI and Bytecode key value pairs) in the `contracts/artifacts` folder needed for deployment. ** This takes about 2 minutes to run **
 6. Run `npm run deploy` to deploy the smart contracts. ** This takes about 2 minutes **
     - This docker container first deploys both the Registry contract and the OrgRegistry contract.
     - Then it registers (1) Buyer and (2) Supplier organizations. The corresponding `/config/config-${role}.json` files are updated with the newly deployed contract addresses.
@@ -291,7 +291,26 @@ nvm use 11
    - Consider these steps if you are running many of the `radish` containers and your PC is bogged down
    - Check the memory usage by running `docker stats`
    - If the containers are using most of the RAM allocated to Docker, you can increase RAM available to Docker by clicking the Docker Desktop icon in the task bar. Choose `Preferences --> Advanced`, then increase `Memory` to a recommended `12.0GiB` (default is `2.0GiB`). Although not required in all cases, it is recommended to increase the swap memory to 4GB and CPU cores to 8 on Docker Preferences/Settings.
-4. Running tests
+4. Timeout error when running 'setup-circuits'. If you see this error:
+    ```
+    $ npm run setup-circuits
+
+    > radish-34@1.0.0 setup-circuits /Users/edgema/Documents/apps/baseline/radish34
+    > ./ops/setup_circuits.sh
+
+    Starting mongo-buyer ... done
+    Starting zkp         ... done
+    timeout not found on PATH... sleeping 15 seconds
+    ```
+
+    you can check to see whether timeout is on your path, and if not, add it. It should be in `/usr/local/bin/timeout`. Or, if it isn't present, you can install it:
+
+    ```
+    brew install coreutils
+    sudo ln -s /usr/local/bin/gtimeout /usr/local/bin/timeout
+    ```
+
+5. Running tests
    - In some cases, while running the test suite `npm run test` there could be a socket hang up error. This is potentially due to race conditions across the different containers for the API services. To resolve this issue run `docker-compose restart api-buyer api-supplier1 api-supplier2` to get rid of errors while running the test suite.
 
 ### Front-end Environment
