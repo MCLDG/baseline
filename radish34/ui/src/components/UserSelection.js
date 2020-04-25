@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ServerSettingsContext } from '../contexts/server-settings-context';
-import { Config } from '../config/config-radish.json';
+import { Config } from '../config-radish.json';
 
 const uriBuyer = `${Config.radishBuyerAPIURL}/graphql`;
 const uriSupplier1 = `${Config.radishSupplier1APIURL}/graphql`;
