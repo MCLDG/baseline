@@ -1,3 +1,3 @@
 window.config = {
-  radishAPIURL: 'radish-api-buyer',
+  radishAPIURL: 'localhost:8001',
 };
